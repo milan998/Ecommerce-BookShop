@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+    <link href="assets/fonts/">
+    <link href="assets/webfonts/">
+
+    <link href="/assets/img/favicon.ico" rel="shortcut icon"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/slicknav.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/jquery-ui.min.css">
+
+</head>
+<body>
+<nav class="main-navbar">
+    <div class="container">
+        <!-- menu -->
+        <ul class="main-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/books">Books</a>
+            </li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Pages</a>
+                <ul class="sub-menu">
+                    <li><a href="./product.html">Product Page</a></li>
+                    <li><a href="./category.html">Category Page</a></li>
+                    <li><a href="./cart.html">Cart Page</a></li>
+                    <li><a href="./checkout.html">Checkout Page</a></li>
+                    <li><a href="./contact.html">Contact Page</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row pt-5t">
+        <div class="col-md-5">
+            <form th:action="@{'/books/{id}'
+            (id = ${book?.getId()})}"
+                  method="post"
+                  enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Book</label>
+                    <input type="text"
+                           class="form-control"
+                           id="name"
+                           name="name"
+                           th:value="(${book} != null ? ${book.getName()} : '')"
+                           required
+                           placeholder="Enter book name">
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="text"
+                           class="form-control"
+                           id="price"
+                           name="price"
+                           th:value="(${book} != null ? ${book.getPrice()} : '')"
+                           placeholder="Price">
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="text"
+                           class="form-control"
+                           id="quantity"
+                           name="quantity"
+                           th:value="(${book} != null ? ${book.getQuantity()} : '')"
+                           placeholder="Quantity">
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <input type="text"
+                           class="form-control"
+                           id="rating"
+                           name="rating"
+                           th:value="(${book} != null ? ${book.getRating()} : '')"
+                           placeholder="Rating">
+                </div>
+                <div class="form-group">
+                    <label for="publishDate">Publication date</label>
+                    <input type="date"
+                           class="form-control"
+                           id="publishDate"
+                           name="publishDate"
+                           th:value="(${book} != null ? ${book.getPublishDate()} : '')"
+                           placeholder="Publication date">
+                </div>
+                <div class="form-group">
+                    <label for="language">Language</label>
+                    <input type="text"
+                           class="form-control"
+                           id="language"
+                           name="language"
+                           th:value="(${book} != null ? ${book.getLanguage()} : '')"
+                           placeholder="Language">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text"
+                           class="form-control"
+                           id="description"
+                           name="description"
+                           th:value="(${book} != null ? ${book.getDescription()} : '')"
+                           placeholder="Description">
+                </div>
+
+                <div class="form-group">
+                    <label>Authors</label>
+                    <select name="author" class="form-control">
+                        <option th:if="${book} != null"
+                                th:selected="${book.getAuthor() != null &&
+                                book.getAuthor().getId() == auth.getId()}"
+                                th:each="auth : ${authors}"
+                                th:value="${auth.getId()}"
+                                th:text="${auth.getFullName()}">
+                        </option>
+                        <option th:if="${book} == null"
+                                th:each="auth : ${authors}"
+                                th:value="${auth.getId()}"
+                                th:text="${auth.getFullName()}">
+                        </option>
+                    </select>
+                    <div class="form-group">
+                        <label>Categories</label>
+                        <select name="categories" class="form-control" id="categories" multiple="multiple">
+                            <option th:if="${book} != null"
+                                    th:selected="${book.getCategories() != null}"
+                                    th:each="cat : ${categories}"
+                                    th:value="${{cat.getId()}}"
+                                    th:text="${cat.getName()}">
+                            </option>
+                            <option th:if="${book} == null"
+                                    th:each="cat : ${categories}"
+                                    th:value="${{cat.getId()}}"
+                                    th:text="${cat.getName()}">
+                            </option>
+                        </select>
+
+                    </div>
+
+
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <input name="image" id="image" class="form-control" type="file"/>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a type="button" class="btn btn-primary" href="/books">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<section class="footer-section pt-5">
+    <div class="container">
+        <div class="footer-logo text-center">
+            <a href="/home"><img src="assets/img/logo/logo.png" alt=""></a>
+        </div>
+    </div>
+    <div class="social-links-warp">
+        <div class="container">
+            <div class="social-links">
+                <a href="" class="instagram"><i class="fa fa-instagram"></i><span>instagram</span></a>
+                <a href="" class="google-plus"><i class="fa fa-google-plus"></i><span>g+plus</span></a>
+                <a href="" class="pinterest"><i class="fa fa-pinterest"></i><span>pinterest</span></a>
+                <a href="" class="facebook"><i class="fa fa-facebook"></i><span>facebook</span></a>
+                <a href="" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a>
+                <a href="" class="youtube"><i class="fa fa-youtube"></i><span>youtube</span></a>
+                <a href="" class="tumblr"><i class="fa fa-tumblr-square"></i><span>tumblr</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+</html>
